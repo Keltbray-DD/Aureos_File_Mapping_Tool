@@ -26,13 +26,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     function filterProjects() {
       const searchTerm = searchInput.value.toLowerCase();
-      const statusValue = statusFilter.value;
+    //   const statusValue = statusFilter.value;
 
       const filtered = mappingData.files.filter(p => {
         const matchesSearch = p['File Type'].toLowerCase().includes(searchTerm) || 
                               p['ACC Folder Path'].toLowerCase().includes(searchTerm);
-        const matchesStatus = statusValue === "" || p.status === statusValue;
-        return matchesSearch && matchesStatus;
+        // const matchesStatus = statusValue === "" || p.status === statusValue;
+        return matchesSearch 
       });
 
       renderGallery(filtered);
