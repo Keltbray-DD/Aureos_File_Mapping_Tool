@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://www.aureos.com/wp-content/uploads/2025/02/AUREOS-FAVicon_512px-x-512px-150x150.png" sizes="32x32">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/requestGallery.css">
+    <script src="js/variables.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Leaflet CSS -->
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <title>Aureos File Mapping Tool</title>
+</head>
+<body>
+    <div class="top-bar">
+        <img src="https://www.aureos.com/wp-content/themes/keltbray/assets/img/logo/AUREOS_logo_wh.svg" 
+        class="logo logo--white" 
+        alt="Aureos Logo">
+        <div class="title"><h2>File Mapping Tool</h2></div>
+        <div class="profile-container" id="profileMenu">
+          <img id="userPic" src="https://images.profile.autodesk.com/default/user_X58.png" alt="Profile" class="profile-pic" />
+          <div class="dropdown-menu" id="dropdown">
+            <div ><strong>User:</strong> <p id="userName"></p></div>
+            <div ><strong>Email:</strong> <p id="userEmail"></p></div>
+            <div class="logout" onclick="logout()">Logout</div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <h1>Welcome to the File Mapping Tool</h1>
+        
+        <p>This tool is to help users know where to place files in the Aureos ACC folder structure</p>
+    </div>
+    <div class="gallery-options-container">
+        <div class="filters">
+            <input type="text" id="searchInput" placeholder="Search by name or code..." />
+            <select id="statusFilter">
+              <option value="">All Statuses</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+        
+    </div>
+    <div class="gallery-container">
+        <div class="gallery" id="projectGallery"></div>
+    </div>
+    <div id="appInfo"></div>
+    <a href="https://www.aureos.com/" target="_blank" rel="noopener noreferrer">
+        <img src="https://www.aureos.com/wp-content/themes/keltbray/assets/img/logo/AUREOS_logo_wh.svg" 
+             class="logoFooter logo--white" 
+             alt="Aureos Logo">
+    </a>
+
+</body>
+</html>
