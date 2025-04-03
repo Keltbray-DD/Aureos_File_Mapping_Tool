@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("appInfo").textContent = `${appName} ${appVersion}`;
     const gallery = document.getElementById('projectGallery');
     const searchInput = document.getElementById('searchInput');
-    const statusFilter = document.getElementById('statusFilter');
+    //const statusFilter = document.getElementById('statusFilter');
 
     mappingData = await geMappingData()
 
@@ -16,9 +16,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         const card = document.createElement('div');
         card.className = 'gallery-card';
         card.innerHTML = `
-          <h3>${item['File Type']}</h3>
-          <p><strong>Folder:</strong> ${item['ACC Folder Path']}</p>
-                  `;
+            <h3>${item['File Type']}</h3>
+            <p><strong>Folder:</strong> ${item['ACC Folder Path']}</p>
+            <p><strong>Form:</strong> ${item['Form']}</p>
+           `;
         gallery.appendChild(card);
       });
     }
@@ -39,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Event listeners
     searchInput.addEventListener('input', filterProjects);
-    statusFilter.addEventListener('change', filterProjects);
+    //statusFilter.addEventListener('change', filterProjects);
 
     // Initial render
     renderGallery(mappingData.files);
