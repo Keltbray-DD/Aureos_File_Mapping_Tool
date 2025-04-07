@@ -16,7 +16,7 @@
     />
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Aureos File Mapping Tool</title>
 </head>
 <body>
@@ -35,8 +35,12 @@
         <p>This tool is to help users know where to place files in the Aureos ACC folder structure</p>
     </div>
     <div class="tab-bar">
-        <button class="tab-button active" onclick="toggleTab('fileContainer')">Files</button>
-        <button class="tab-button" onclick="toggleTab('folderContainer')">Folders</button>
+        <button class="tab-button active" onclick="toggleTab('fileContainer', this)">
+            <i class="fas fa-file-alt"></i> Files
+          </button>
+        <button class="tab-button" onclick="toggleTab('folderContainer', this)">
+            <i class="fas fa-folder-open"></i> Folders
+          </button>
     </div>
     <div id="fileContainer" class="tab-content active">
         <div class="gallery-options-container">

@@ -512,6 +512,10 @@ body {
   transition: background-color 0.2s, color 0.2s;
 }
 
+.tab-button i {
+  margin-right: 8px;
+}
+
 .tab-button:hover {
   background-color: #e0e0e0;
 }
