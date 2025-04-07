@@ -481,3 +481,44 @@ body {
     margin-top: 10px;
     margin: auto;
 }
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tab-bar {
+  display: flex;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 10px;
+  background-color: #f1f1f1;
+  border-radius: 6px 6px 0 0;
+  overflow: hidden;
+  max-width: 1200px;
+  width: 90%;
+  margin: auto;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 12px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.tab-button:hover {
+  background-color: #e0e0e0;
+}
+
+.tab-button.active {
+  background-color: white;
+  border-bottom: 2px solid white;
+  font-weight: bold;
+  color: #2a5d9f;
+}
