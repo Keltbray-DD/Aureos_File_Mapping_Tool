@@ -1,5 +1,5 @@
 const appName = "Aureos File Mapping Tool";
-const appVersion = "v0.1.3 ALPHA";
+const appVersion = "v0.1.4 ALPHA";
 
 let appPermissions
 let userEmail
