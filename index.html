@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/requestGallery.css">
     <link rel="stylesheet" href="assets/css/folderStructure.css">
+    <link rel="stylesheet" href="assets/css/roleGrid.css">
     <script src="js/variables.js"></script>
     <script src="js/main.js"></script>
     <!-- Leaflet CSS -->
@@ -40,6 +41,9 @@
           </button>
         <button class="tab-button" onclick="toggleTab('folderContainer', this)">
             <i class="fas fa-folder-open"></i> Folders
+          </button>
+          <button class="tab-button" onclick="toggleTab('roleContainer', this)">
+            <i class="fas fa-users"></i> Roles
           </button>
     </div>
     <div id="fileContainer" class="tab-content active">
@@ -76,6 +80,47 @@
             </div>
         </div>
 
+    </div>
+    <div id="roleContainer" class="tab-content">
+      <div class="gallery-options-container">
+        <div class="filters">
+            <input type="text" id="searchInputRole" placeholder="Search by role..." />
+            <select id="buFilter">
+              <option value="">All Units</option>
+            </select>
+          </div>
+    </div>
+    <div class="gallery-container">
+      <div class="role-grid" id="roleGrid"></div>
+    </div>
+    
+
+    <div class="role-modal" id="roleModal">
+      <div class="role-modal-content">
+        <span class="role-close" onclick="document.getElementById('roleModal').style.display='none'">&times;</span>
+        <h3 id="modalRole"></h3>
+        <div class="role-details-section">
+          <strong>Folder Access:</strong>
+          <ul id="modalFolders" class="details-list"></ul>
+        </div>
+        <div class="role-details-section">
+          <strong>Training Level:</strong>
+          <span id="modalTrainingLevel"></span>
+        </div>
+        <div class="role-details-section">
+          <strong>OCRA Roles:</strong>
+          <ul id="modalOCRA" class="details-list"></ul>
+        </div>
+        <div class="role-details-section">
+          <strong>Project Admin Roles:</strong>
+          <ul id="modalProjectAdmin" class="details-list"></ul>
+        </div>
+        <div class="role-details-section">
+          <strong>Business Units:</strong>
+          <ul id="modalBU" class="details-list"></ul>
+        </div>
+      </div>
+    </div>
     </div>
     <div id="loading" class="loading-spinner">
         Loading...

@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     //const statusFilter = document.getElementById('statusFilter');
     await showLoadingSpinner(galleryContainer)
     mappingData = await geMappingData()
+    roleData = await getRoleData()
     const tree = buildTree(mappingData.folders);
+    await buildRoleGrid(roleData)
     document.getElementById("folderTree").appendChild(renderTree(tree));
     await hideLoadingSpinner(galleryContainer)
 
@@ -188,6 +190,93 @@ async function generateGallery(projects) {
     });
 }
 
+async function buildRoleGrid(data) {
+
+  data.sort((a, b) => a.role.localeCompare(b.role));
+
+  const grid = document.getElementById('roleGrid');
+  const searchInput = document.getElementById('searchInputRole');
+  const buFilter = document.getElementById('buFilter');
+
+  const modal = document.getElementById('roleModal');
+  const modalFolders = document.getElementById('modalFolders');
+  const modalRole = document.getElementById('modalRole');
+  const modalTrainingLevel = document.getElementById('modalTrainingLevel');
+  const modalOCRA = document.getElementById('modalOCRA');
+  const modalProjectAdmin = document.getElementById('modalProjectAdmin');
+  const modalBU = document.getElementById('modalBU');
+
+  function getUniqueBUs() {
+    const buSet = new Set();
+    data.forEach(role => {
+      (role.bu || []).forEach(b => buSet.add(b.Value));
+    });
+    return Array.from(buSet).sort();
+  }
+
+  function populateBUFilter() {
+    const buOptions = getUniqueBUs();
+    buOptions.forEach(bu => {
+      const option = document.createElement('option');
+      option.value = bu;
+      option.textContent = bu;
+      buFilter.appendChild(option);
+    });
+  }
+
+  function displayRoles(roles) {
+    grid.innerHTML = '';
+    roles.forEach(roleObj => {
+      const card = document.createElement('div');
+      card.className = 'gallery-card';
+      card.textContent = roleObj.role;
+      card.onclick = () => showModal(roleObj);
+      grid.appendChild(card);
+    });
+  }
+
+  function showModal(roleObj) {
+    modalRole.textContent = roleObj.role;
+    modalTrainingLevel.textContent = roleObj.trainingLevel || 'N/A';
+
+    roleObj.folderAccess.sort((a, b) => a.Value.localeCompare(b.Value));
+    roleObj.projectAdminRoles.sort((a, b) => a.Value.localeCompare(b.Value));
+
+    const listify = (items) => items.map(item => `<li>${item.Value}</li>`).join('');
+    modalFolders.innerHTML = listify(roleObj.folderAccess || []);
+    modalOCRA.innerHTML = listify(roleObj.ocraRoles || []);
+    modalProjectAdmin.innerHTML = listify(roleObj.projectAdminRoles || []);
+    modalBU.innerHTML = listify(roleObj.bu || []);
+
+    modal.style.display = 'flex';
+  }
+
+  function filterAndDisplay() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedBU = buFilter.value;
+
+    const filtered = data.filter(role => {
+      const matchSearch = role.role.toLowerCase().includes(searchTerm);
+      const matchBU = !selectedBU || (role.bu || []).some(b => b.Value === selectedBU);
+      return matchSearch && matchBU;
+    });
+
+    displayRoles(filtered);
+  }
+
+  // Event listeners
+  searchInput.addEventListener('input', filterAndDisplay);
+  buFilter.addEventListener('change', filterAndDisplay);
+
+  window.onclick = e => {
+    if (e.target === modal) modal.style.display = 'none';
+  };
+
+  // Initial load
+  populateBUFilter();
+  displayRoles(data);
+}
+
 async function geMappingData() {
       
     const headers = {
@@ -202,6 +291,35 @@ async function geMappingData() {
   
     const apiUrl =
       "https://prod-00.uksouth.logic.azure.com:443/workflows/d4c9c018c4c84c18a8addc3903dbb969/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VOKHnqDx1hjbyL0c1kjAH56aP2if06udPdmu4X56RwQ";
+    //console.log(apiUrl)
+    //console.log(requestOptions)
+    responseData = await fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        const JSONdata = data;
+        console.log(JSONdata);
+        //console.log(JSONdata.uploadKey)
+        //console.log(JSONdata.urls)
+        return JSONdata;
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+    return responseData;
+  }
+
+  async function getRoleData() {
+      
+    const headers = {
+      "Content-Type": "application/json",
+    };
+  
+    const requestOptions = {
+      method: "GET",
+      headers: headers,
+      //body: JSON.stringify(bodyData),
+    };
+  
+    const apiUrl =
+      "https://prod-60.uksouth.logic.azure.com:443/workflows/b9e23700047948609bfb4cf36a95369c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Up3Q9sV3xoYvJdF34MBVWi9cxHN_Osozt0uo8cKZerw";
     //console.log(apiUrl)
     //console.log(requestOptions)
     responseData = await fetch(apiUrl, requestOptions)
