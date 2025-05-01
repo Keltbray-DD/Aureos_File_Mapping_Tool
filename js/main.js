@@ -153,11 +153,220 @@ document.addEventListener("DOMContentLoaded", async function () {
       return ul;
     }
 
+//////////////////////////////// Add Modal
+
+
+
+  const addModal = document.getElementById("addModal");
+  const openBtn = document.getElementById("openAddModalBtn");
+  const closeBtn = document.getElementById("closeModalBtn");
+  const addModalTitle = document.getElementById("addModalTitle");
+  // const formLabel = document.getElementById("titleFormLabel");
+  const addForm = document.getElementById('dynamicForm')
+
+  // Open modal on button click
+  openBtn.onclick = function() {
+    addModal.style.display = "block";
+    addForm.innerHTML = ''
+    // Update the form dynamically based on addType
+    if (addType === 'file') {
+      addModalTitle.textContent = "Add Missing File Request";
+    // Text Input
+      const fileNameLabel = document.createElement('label')
+      fileNameLabel.textContent = "Enter file request name:"
+      const fileNameInput = document.createElement('input')
+      fileNameInput.id = 'fileNameInput'
+      fileNameInput.required = true
+
+      // Folder Dropdown
+      const folderDropdownLabel = document.createElement('label')
+      folderDropdownLabel.textContent = 'Please select where you believe the file should live in the folder structure'
+      const folderDropdown = document.createElement('select')
+      folderDropdown.id = 'fileFolderDropdown'
+      folderDropdown.required = true
+      mappingData.folders.forEach(element => {
+        const option = document.createElement('option')
+        option.value = element.concat_path
+        option.textContent = element.concat_path
+        folderDropdown.appendChild(option)
+      });
+      addForm.appendChild(fileNameLabel)
+      addForm.appendChild(fileNameInput)
+      addForm.appendChild(folderDropdownLabel)
+      addForm.appendChild(folderDropdown)
+      
+
+    } else if (addType === 'folder') {
+      addModalTitle.textContent = "Add Folder Request";
+      // Text Input
+      const folderNameLabel = document.createElement('label')
+      folderNameLabel.textContent = "Enter folder request name:"
+      const folderNameInput = document.createElement('input')
+      folderNameInput.id = 'folderNameInput'
+      folderNameInput.required = true
+
+
+      // Folder Dropdown
+      const folderDropdownLabel = document.createElement('label')
+      folderDropdownLabel.textContent = 'Please select which folder your requested folder should sit in'
+      const folderParentFolderDropdown = document.createElement('select')
+      folderParentFolderDropdown.id = 'folderParentFolderDropdown'
+      folderParentFolderDropdown.required = true
+      const filtered = mappingData.folders.filter(item => {
+        const slashCount = (item.concat_path.match(/\//g) || []).length;
+
+        if (item.concat_path.includes("Z.PROJECT_ADMIN")) {
+          // Only include if exactly 1 slash
+          return slashCount === 1;
+        } else {
+          // Allow 0 or 1 slashes
+          return slashCount < 1;
+        }
+      });
+      filtered.forEach(element => {
+        const option = document.createElement('option')
+        option.value = element.concat_path
+        option.textContent = element.concat_path
+        folderParentFolderDropdown.appendChild(option)
+      });
+
+      addForm.appendChild(folderNameLabel)
+      addForm.appendChild(folderNameInput)
+      addForm.appendChild(folderDropdownLabel)
+      addForm.appendChild(folderParentFolderDropdown)
+    } else if (addType === 'role') {
+      addModalTitle.textContent = "Add Role Request";
+      // Text Input
+      const roleNameLabel = document.createElement('label')
+      roleNameLabel.textContent = "Enter role name:"
+      const roleNameInput = document.createElement('input')
+      roleNameInput.id = 'roleNameInput'
+      roleNameInput.required = true
+
+      // Folder Dropdown
+      const folderDropdownLabel = document.createElement('label')
+      folderDropdownLabel.textContent = 'Please select which folder this role would require access to (hold ctrl to select multiple)'
+      const folderParentFolderDropdown = document.createElement('select')
+      folderParentFolderDropdown.id = 'selectFolderDropdown'
+      folderParentFolderDropdown.required = true
+      folderParentFolderDropdown.multiple = true
+      const filtered = mappingData.folders.filter(item => {
+        const slashCount = (item.concat_path.match(/\//g) || []).length;
+
+        if (item.concat_path.includes("Z.PROJECT_ADMIN")) {
+          // Only include if exactly 1 slash
+          return slashCount === 1;
+        } else {
+          // Allow 0 or 1 slashes
+          return slashCount < 1;
+        }
+      });
+      filtered.forEach(element => {
+        const option = document.createElement('option')
+        option.value = element.concat_path
+        option.textContent = element.concat_path
+        folderParentFolderDropdown.appendChild(option)
+      });
+
+      addForm.appendChild(roleNameLabel)
+      addForm.appendChild(roleNameInput)
+      addForm.appendChild(folderDropdownLabel)
+      addForm.appendChild(folderParentFolderDropdown)
+    } else {
+
+    }
+
+    const emailInput = document.createElement('input')
+    emailInput.id = 'emailInput'
+    emailInput.type = 'email'
+    emailInput.required = true
+    emailInput.placeholder = 'Please enter your email so we can contact you'
+    addForm.appendChild(emailInput)
+
+    const submitButton = document.createElement('button')
+    submitButton.textContent = `Submit ${addType} request`
+    submitButton.type = 'submit'
+    addForm.appendChild(submitButton)
+
+    // Example form submit handler
+    document.getElementById("dynamicForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    let formData
+      switch (addType) {
+        case 'file':
+          formData = {
+            requestType:addType,
+            requestAdditionName: document.getElementById('fileNameInput').value,
+            folderLocation: document.getElementById('fileFolderDropdown').value,
+            emailInput:document.getElementById('emailInput').value,
+          }
+          break;
+        case 'folder':
+          formData = {
+            requestType:addType,
+            requestAdditionName: document.getElementById('folderNameInput').value,
+            folderLocation: document.getElementById('folderParentFolderDropdown').value,
+            emailInput:document.getElementById('emailInput').value,
+          }
+          break;
+        case 'role':
+
+          const select = document.getElementById('selectFolderDropdown');
+
+          const selectedValues = Array.from(select.selectedOptions).map(option => option.value);
+          formData = {
+            requestType:addType,
+            requestAdditionName: document.getElementById('roleNameInput').value,
+            folderLocation: selectedValues.join(", "),
+            emailInput:document.getElementById('emailInput').value,
+          }
+          break;
+      
+        default:
+          break;
+      }
+    // Send data to your HTTP endpoint (replace URL with your actual endpoint)
+  fetch('https://prod-15.uksouth.logic.azure.com:443/workflows/b1e709a54b0e43a58f50cfec58540e08/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=5mOG3atbFl1mFkX4G69GhJ-C1lHVK5YLENVq_0HXOOg', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(response => {
+    if (response.ok) {
+      showPopup('Addidion Request Submitted', 'Your request has been successfully submitted to the ACC Support Team',true)
+    } else{
+      showPopup('Addidion Request Failed', 'An error occured with your request please contact ACCSupportDigital@aureos.com',false)
+    }
+    return
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('There was an error submitting the form.');
+  });
+
+    addModal.style.display = "none";
+  });
+  };
+
+  // Close modal on X click
+  closeBtn.onclick = function() {
+    addModal.style.display = "none";
+  };
+
+  // Close modal if clicking outside the content
+  window.onclick = function(event) {
+    if (event.target == addModal) {
+      addModal.style.display = "none";
+    }
+  };
+
 
 
 })
 
-function toggleTab(containerId) {
+function toggleTab(containerId,type) {
   const allTabs = document.querySelectorAll('.tab-content');
   const buttons = document.querySelectorAll('.tab-button');
 
@@ -168,7 +377,7 @@ function toggleTab(containerId) {
   buttons.forEach(btn => {
     btn.classList.remove('active');
   });
-
+  addType = type
   document.getElementById(containerId).classList.add('active');
   event.target.classList.add('active');
 }
@@ -349,4 +558,19 @@ async function hideLoadingSpinner(container) {
   // Show the loading spinner
   loadingSpinner.style.display = 'none';
   container.style.display = 'block';
+}
+
+// Function to show popup with fade-in
+function showPopup(title, message,success) {
+  const popup = document.getElementById("popup");
+
+  popup.classList.add("show"); // Add 'show' class to make the popup visible
+  if(success == false){
+    popup.classList.add("failed")
+  }
+  popup.innerHTML = `<h4>${title}</h4><br><span>${message}</span>`;
+  // Hide the popup after 5 seconds with fade-out
+  setTimeout(function () {
+    popup.classList.remove("show"); // Remove 'show' class to fade it out
+  }, 10000);
 }

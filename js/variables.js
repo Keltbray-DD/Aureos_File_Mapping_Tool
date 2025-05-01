@@ -1,5 +1,5 @@
 const appName = "Aureos ACC Mapping Tool";
-const appVersion = "v0.1.7 BETA";
+const appVersion = "v0.1.8 BETA";
 
 let appPermissions
 let userEmail
@@ -15,3 +15,5 @@ let searchInput
 let dropdown
 let modal
 let modalMessage
+
+let addType = 'file'; 

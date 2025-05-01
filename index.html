@@ -36,13 +36,13 @@
         <p>This tool is to help users know where to place files in the Aureos ACC folder structure</p>
     </div>
     <div class="tab-bar">
-        <button class="tab-button active" onclick="toggleTab('fileContainer', this)">
+        <button class="tab-button active" onclick="toggleTab('fileContainer', 'file')">
             <i class="fas fa-file-alt"></i> Files
           </button>
-        <button class="tab-button" onclick="toggleTab('folderContainer', this)">
+        <button class="tab-button" onclick="toggleTab('folderContainer', 'folder')">
             <i class="fas fa-folder-open"></i> Folders
           </button>
-          <button class="tab-button" onclick="toggleTab('roleContainer', this)">
+          <button class="tab-button" onclick="toggleTab('roleContainer', 'role')">
             <i class="fas fa-users"></i> Roles
           </button>
     </div>
@@ -122,6 +122,22 @@
       </div>
     </div>
     </div>
+
+        <!-- Floating + button -->
+    <button id="openAddModalBtn">+</button>
+
+    <!-- The Modal -->
+    <div id="addModal" class="addModal">
+      <div class="addModal-content">
+        <span class="close" id="closeModalBtn">&times;</span>
+        <h2 id="addModalTitle">Add Request</h2>
+        <form id="dynamicForm">
+
+        </form>
+      </div>
+    </div>
+  <!-- Popup message -->
+  <div id="popup" class="popup"></div>
     <div id="loading" class="loading-spinner">
         Loading...
     </div>
