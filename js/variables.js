@@ -1,5 +1,5 @@
 const appName = "Aureos ACC Mapping Tool";
-const appVersion = "v0.1.8 BETA";
+const appVersion = "v0.1.9 BETA";
 
 let appPermissions
 let userEmail
