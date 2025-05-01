@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     const gallery = document.getElementById('projectGallery');
     const searchInput = document.getElementById('searchInput');
     //const statusFilter = document.getElementById('statusFilter');
+
+    let tab = window.location.hash.substring(1); // Remove the '#'
+    if (!tab) tab = "files"; // Default tab
+    toggleTab(`${tab}Container`, tab)
+
     await showLoadingSpinner(galleryContainer)
     mappingData = await geMappingData()
     roleData = await getRoleData()
@@ -169,7 +174,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     addModal.style.display = "block";
     addForm.innerHTML = ''
     // Update the form dynamically based on addType
-    if (addType === 'file') {
+    if (addType === 'files') {
       addModalTitle.textContent = "Add Missing File Request";
     // Text Input
       const fileNameLabel = document.createElement('label')
@@ -196,7 +201,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       addForm.appendChild(folderDropdown)
       
 
-    } else if (addType === 'folder') {
+    } else if (addType === 'folders') {
       addModalTitle.textContent = "Add Folder Request";
       // Text Input
       const folderNameLabel = document.createElement('label')
@@ -234,7 +239,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       addForm.appendChild(folderNameInput)
       addForm.appendChild(folderDropdownLabel)
       addForm.appendChild(folderParentFolderDropdown)
-    } else if (addType === 'role') {
+    } else if (addType === 'roles') {
       addModalTitle.textContent = "Add Role Request";
       // Text Input
       const roleNameLabel = document.createElement('label')
@@ -379,7 +384,7 @@ function toggleTab(containerId,type) {
   });
   addType = type
   document.getElementById(containerId).classList.add('active');
-  event.target.classList.add('active');
+  document.getElementById(type).classList.add('active');
 }
 
 async function generateGallery(projects) {
@@ -574,3 +579,4 @@ function showPopup(title, message,success) {
     popup.classList.remove("show"); // Remove 'show' class to fade it out
   }, 10000);
 }
+

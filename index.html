@@ -36,17 +36,17 @@
         <p>This tool is to help users know where to place files in the Aureos ACC folder structure</p>
     </div>
     <div class="tab-bar">
-        <button class="tab-button active" onclick="toggleTab('fileContainer', 'file')">
+        <a class="tab-button active" id="files" href="#files" onclick="toggleTab('filesContainer', 'files')">
             <i class="fas fa-file-alt"></i> Files
-          </button>
-        <button class="tab-button" onclick="toggleTab('folderContainer', 'folder')">
+        </a>
+        <a class="tab-button" id="folders" href="#folders" onclick="toggleTab('foldersContainer', 'folders')">
             <i class="fas fa-folder-open"></i> Folders
-          </button>
-          <button class="tab-button" onclick="toggleTab('roleContainer', 'role')">
+        </a>
+          <a class="tab-button" id="roles" href="#roles" onclick="toggleTab('rolesContainer', 'roles')">
             <i class="fas fa-users"></i> Roles
-          </button>
+          </a>
     </div>
-    <div id="fileContainer" class="tab-content active">
+    <div id="filesContainer" class="tab-content active">
         <div class="gallery-options-container">
             <div class="filters">
                 <input type="text" id="searchInput" placeholder="Search by file type or folder..." />
@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <div id="folderContainer" class="tab-content">
+    <div id="foldersContainer" class="tab-content">
         <div class="gallery-options-container">
             <p style="text-align: center;">Below is the standard Aureos ACC folder structure, to find out which permissions are applied as standard select one.</p>
         </div>
@@ -81,7 +81,7 @@
         </div>
 
     </div>
-    <div id="roleContainer" class="tab-content">
+    <div id="rolesContainer" class="tab-content">
       <div class="gallery-options-container">
         <div class="filters">
             <input type="text" id="searchInputRole" placeholder="Search by role..." />
