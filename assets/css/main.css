@@ -541,8 +541,8 @@ body {
     /* Floating button */
     #openAddModalBtn {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
+      bottom: 90px;
+      right: 20px;
       background-color: #4CAF50;
       color: white;
       border: none;
@@ -551,7 +551,11 @@ body {
       height: 60px;
       font-size: 36px;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      /* box-shadow: 0 4px 8px rgba(0,0,0,0.2); */
+    }
+
+    #openAddModalBtn:hover{
+      transform: scale(1.05);
     }
 
     /* Modal styles */
