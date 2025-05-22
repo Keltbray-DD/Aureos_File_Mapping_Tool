@@ -298,7 +298,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     e.preventDefault();
     let formData
       switch (addType) {
-        case 'file':
+        case 'files':
           formData = {
             requestType:addType,
             requestAdditionName: document.getElementById('fileNameInput').value,
@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             emailInput:document.getElementById('emailInput').value,
           }
           break;
-        case 'folder':
+        case 'folders':
           formData = {
             requestType:addType,
             requestAdditionName: document.getElementById('folderNameInput').value,
@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             emailInput:document.getElementById('emailInput').value,
           }
           break;
-        case 'role':
+        case 'roles':
 
           const select = document.getElementById('selectFolderDropdown');
 
