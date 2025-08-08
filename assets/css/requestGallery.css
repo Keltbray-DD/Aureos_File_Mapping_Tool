@@ -73,6 +73,10 @@ select {
     font-size: 1rem;
 }
 
+#buFilter{
+    max-width: 20%;
+}
+
 input {
     flex: 2;
 }

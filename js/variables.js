@@ -1,11 +1,12 @@
 const appName = "Aureos ACC Mapping Tool";
-const appVersion = "v0.2.1 BETA";
+const appVersion = "v1.0.0";
 
 let appPermissions
 let userEmail
 
 let mappingData
 let roleData
+let nsData
 let contractList
 let selectedProject
 
@@ -16,4 +17,13 @@ let dropdown
 let modal
 let modalMessage
 
-let addType = 'file'; 
+let addType = 'files'; 
+
+let nsArray = [
+    "projectPin",
+    "originator",
+    "function",
+    "spatial",
+    "form",
+    "discipline"
+]

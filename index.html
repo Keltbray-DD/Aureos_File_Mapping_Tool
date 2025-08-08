@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/css/requestGallery.css">
     <link rel="stylesheet" href="assets/css/folderStructure.css">
     <link rel="stylesheet" href="assets/css/roleGrid.css">
+    <link rel="stylesheet" href="assets/css/nsGrid.css">
     <script src="js/variables.js"></script>
     <script src="js/main.js"></script>
     <!-- Leaflet CSS -->
@@ -42,9 +43,12 @@
         <a class="tab-button" id="folders" href="#folders" onclick="toggleTab('foldersContainer', 'folders')">
             <i class="fas fa-folder-open"></i> Folders
         </a>
-          <a class="tab-button" id="roles" href="#roles" onclick="toggleTab('rolesContainer', 'roles')">
-            <i class="fas fa-users"></i> Roles
-          </a>
+        <a class="tab-button" id="roles" href="#roles" onclick="toggleTab('rolesContainer', 'roles')">
+          <i class="fas fa-users"></i> Roles
+        </a>
+        <a class="tab-button" id="ns" href="#ns" onclick="toggleTab('nsContainer', 'ns')">
+          <i class="fas fa-list"></i> Naming Standard
+        </a>
     </div>
     <div id="filesContainer" class="tab-content active">
         <div class="gallery-options-container">
@@ -121,6 +125,103 @@
         </div>
       </div>
     </div>
+    </div>
+
+    <div id="nsContainer" class="tab-content">
+      <div class="gallery-options-container">
+        <div class="filters">
+            <input type="text" id="searchInputNS" placeholder="Search by value or description..." />
+            <select id="sectionFilter">
+              <option value="">All Sections</option>
+            </select>
+          </div>
+      </div>
+      <div id="nsGrid" class="nsGrid">
+        <div id="nsGrid-projectPin" class="nsGrid-Component">
+          <h2>Project PIN</h2>
+          <table id="ns_projectPin_table">
+            <thead>
+              <tr>
+                <th class="th-value">Value</th>
+                <th class="th-desc">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+        <div id="nsGrid-originator" class="nsGrid-Component">
+          <h2>Originator</h2>
+          <table id="ns_originator_table">
+            <thead>
+              <tr>
+                <th class="th-value">Value</th>
+                <th class="th-desc">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+        <div id="nsGrid-function" class="nsGrid-Component">
+          <h2>Function</h2>
+          <table id="ns_function_table">
+            <thead>
+              <tr>
+                <th class="th-value">Value</th>
+                <th class="th-desc">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+        <div id="nsGrid-spatial" class="nsGrid-Component">
+          <h2>Spatial</h2>
+          <table id="ns_spatial_table">
+            <thead>
+              <tr>
+                <th class="th-value">Value</th>
+                <th class="th-desc">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+        <div id="nsGrid-form" class="nsGrid-Component">
+          <h2>Form</h2>
+          <table id="ns_form_table">
+            <thead>
+              <tr>
+                <th class="th-value">Value</th>
+                <th class="th-desc">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+        <div id="nsGrid-discipline" class="nsGrid-Component">
+          <h2>Discipline</h2>
+          <table id="ns_discipline_table">
+            <thead>
+              <tr>
+                <th class="th-value">Value</th>
+                <th class="th-desc">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
         <!-- Floating + button -->

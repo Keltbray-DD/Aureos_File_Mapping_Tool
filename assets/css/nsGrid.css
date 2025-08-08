@@ -1,0 +1,51 @@
+.nsGrid{
+    gap: 20px;
+    max-width: 1200px;
+    width: 90%;
+    margin: 20px auto;
+    padding: 10px 0;
+    display: grid;
+}
+
+.nsGrid-Component{
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: auto;
+    width: 95%;
+    max-width: 1200px;
+}
+
+.nsGrid-Component:hover{
+    transform: translateY(1.1);  /* Slight zoom-in effect on hover */
+}
+
+.nsGrid-Component h2{
+    margin-top: 5px;
+}
+
+.nsGrid-Component table{
+    width: 100%;
+}
+
+th{
+    text-align: left;
+}
+.th-desc{
+    width: 70%;
+}
+.th-value{
+    width: 20%;
+}
+
+#sectionFilter{
+    padding: 0.5rem 1rem !important;
+    border-radius: 6px !important;
+    border: 1px solid #ccc !important;
+    font-size: 1rem !important;
+    max-width: 20%;
+}
+

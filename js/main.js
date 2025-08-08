@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const galleryContainer = document.getElementById('galleryContainer')
     const gallery = document.getElementById('projectGallery');
     const searchInput = document.getElementById('searchInput');
+    const searchInputNS = document.getElementById('searchInputNS');
     //const statusFilter = document.getElementById('statusFilter');
 
     let tab = window.location.hash.substring(1); // Remove the '#'
@@ -10,11 +11,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     toggleTab(`${tab}Container`, tab)
 
     await showLoadingSpinner(galleryContainer)
-    mappingData = await geMappingData()
+    mappingData = await getMappingData()
     roleData = await getRoleData()
+    nsData = await getNSData()
     const tree = buildTree(mappingData.folders);
     await buildRoleGrid(roleData)
     document.getElementById("folderTree").appendChild(renderTree(tree));
+    await populateNSTables(nsData)
     await hideLoadingSpinner(galleryContainer)
 
     function renderGallery(filteredProjects) {
@@ -48,9 +51,54 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       renderGallery(filtered);
     }
+    function filterNS() {
+      let filtered = []
+      let sectionData = []
+      const searchTerm = searchInputNS.value.toLowerCase();
+    //   const statusValue = statusFilter.value;
+      nsArray.forEach(element => {
+        const section = nsData.default[element]
+        // console.log(section)
+        const result = section.filter(p => {
+          const matchesSearch = p['Value'].toLowerCase().includes(searchTerm) || 
+                                p['Description'].toLowerCase().includes(searchTerm);
+          return matchesSearch 
+        })
+        // const componentArray = table_array.default[element]
+          let nsGridElement = document.getElementById(`nsGrid-${element}`)
+          let tableBody = document.querySelector(`#ns_${element}_table tbody`)
+          tableBody.innerHTML = ''
+          result.forEach(item => {
+            const mainRow = document.createElement("tr");
+            mainRow.innerHTML = `
+              <td>${item.Value}</td>
+              <td>${item.Description}</td>
+            `
+            tableBody.appendChild(mainRow);
+        });
+        if(result.length === 0){
+          nsGridElement.style.display = 'none'
+        }else{
+          nsGridElement.style.display = 'block'
+        }
+
+        // console.log(result)
+        // if(result.length !== 0){
+        //   obj = {[element]:result}
+        //   console.log(obj)
+        //   sectionData.push({[element]:result})
+        // }
+        
+      });
+      // const reformat = Object.assign({}, ...sectionData);
+      // filtered = {default:reformat}
+      // console.log(filtered)
+      // populateNSTables(filtered);
+    }
 
     // Event listeners
     searchInput.addEventListener('input', filterProjects);
+    searchInputNS.addEventListener('input', filterNS);
     //statusFilter.addEventListener('change', filterProjects);
 
     // Initial render
@@ -491,7 +539,51 @@ async function buildRoleGrid(data) {
   displayRoles(data);
 }
 
-async function geMappingData() {
+async function populateNSTables(table_array) {
+  
+  nsArray.forEach(element => {
+    const componentArray = table_array.default[element]
+    let tableBody = document.querySelector(`#ns_${element}_table tbody`)
+    tableBody.innerHTML = ''
+    componentArray.forEach(item => {
+      const mainRow = document.createElement("tr");
+      mainRow.innerHTML = `
+        <td>${item.Value}</td>
+        <td>${item.Description}</td>
+      `
+      tableBody.appendChild(mainRow);
+    });
+  });
+  
+}
+
+async function getNSData() {
+  const headers = {
+      "Content-Type": "application/json",
+    };
+  
+    const requestOptions = {
+      method: "GET",
+      headers: headers,
+      //body: JSON.stringify(bodyData),
+    };
+  
+    const apiUrl =
+      "https://prod-19.uksouth.logic.azure.com:443/workflows/a51eef6b4ea247928f8e305734b7bd93/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Qul_VuvGcH1WL_8pKak-M-YZNQGSe_DZql0T-Tek1tA";
+    //console.log(apiUrl)
+    //console.log(requestOptions)
+    responseData = await fetch(apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        const JSONdata = data;
+        console.log(JSONdata);
+        return JSONdata;
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+    return responseData;
+}
+
+async function getMappingData() {
       
     const headers = {
       "Content-Type": "application/json",
